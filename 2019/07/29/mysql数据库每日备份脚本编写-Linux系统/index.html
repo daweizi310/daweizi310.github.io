@@ -2,9 +2,9 @@
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <title>hexo个人博客搭建流程 | 张维的博客</title>
+  <title>mysql数据库每日备份脚本编写(Linux系统) | 张维的博客</title>
   <meta name="keywords" content>
-  <meta name="description" content="hexo个人博客搭建流程 | 张维的博客">
+  <meta name="description" content="mysql数据库每日备份脚本编写(Linux系统) | 张维的博客">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="mysql数据库每日备份脚本编写(Linux系统)1: 先在系统创建一个文件夹存放复制的sql文件12如: 在 /root 下创建一个 mysqlData文件夹mkdir mysqlData  2: 在mysqlData下再创建一个文件夹 sql1231: 创建复制数据库sql脚本;再授执行权限--&amp;gt;touch backupMysql.sh--&amp;gt;chmod 777 backupMysq">
 <meta property="og:type" content="article">
@@ -213,9 +213,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-hexo个人博客搭建流程" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-mysql数据库每日备份脚本编写-Linux系统" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">hexo个人博客搭建流程</h1>
+        <h1 class="article-title">mysql数据库每日备份脚本编写(Linux系统)</h1>
     
     <div class="article-meta">
         
@@ -225,12 +225,12 @@
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-07-29 13:47:16'>2019-07-29 13:46</time>
+        创建时间:<time class="date" title='更新时间: 2019-07-29 17:11:39'>2019-07-29 17:06</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:21</span>
+        <span>字数:812</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -249,7 +249,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mysql数据库每日备份脚本编写-Linux系统"><span class="toc-text">mysql数据库每日备份脚本编写(Linux系统)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-先在系统创建一个文件夹存放复制的sql文件"><span class="toc-text">1: 先在系统创建一个文件夹存放复制的sql文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-在mysqlData下再创建一个文件夹-sql"><span class="toc-text">2: 在mysqlData下再创建一个文件夹 sql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-编写脚本内容"><span class="toc-text">3: 编写脚本内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-将脚本放入系统任务里执行"><span class="toc-text">4: 将脚本放入系统任务里执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-打开系统任务-起始为空-centos7默认自启动这个任务"><span class="toc-text">1: 打开系统任务;起始为空;centos7默认自启动这个任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-写定时任务-来执行脚本"><span class="toc-text">2: 写定时任务,来执行脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-测试执行"><span class="toc-text">3: 测试执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-备注"><span class="toc-text">4:备注</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -264,8 +264,19 @@
 </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一顿操作猛如虎</p>
-<p>创建过程整理中,整理好会放上去</p>
+        <h1 id="mysql数据库每日备份脚本编写-Linux系统"><a href="#mysql数据库每日备份脚本编写-Linux系统" class="headerlink" title="mysql数据库每日备份脚本编写(Linux系统)"></a>mysql数据库每日备份脚本编写(Linux系统)</h1><h2 id="1-先在系统创建一个文件夹存放复制的sql文件"><a href="#1-先在系统创建一个文件夹存放复制的sql文件" class="headerlink" title="1: 先在系统创建一个文件夹存放复制的sql文件"></a>1: 先在系统创建一个文件夹存放复制的sql文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如: 在 /root 下创建一个 mysqlData文件夹</span><br><span class="line">mkdir mysqlData</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-在mysqlData下再创建一个文件夹-sql"><a href="#2-在mysqlData下再创建一个文件夹-sql" class="headerlink" title="2: 在mysqlData下再创建一个文件夹 sql"></a>2: 在mysqlData下再创建一个文件夹 sql</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1: 创建复制数据库sql脚本;再授执行权限</span><br><span class="line">--&gt;touch backupMysql.sh</span><br><span class="line">--&gt;chmod 777 backupMysql.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-编写脚本内容"><a href="#3-编写脚本内容" class="headerlink" title="3: 编写脚本内容"></a>3: 编写脚本内容</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">1: 编写backupMysql.sh</span><br><span class="line">--&gt; vi backupMysql.sh</span><br><span class="line">************下面的是写的内容*********************</span><br><span class="line">#!/bin/bash</span><br><span class="line">date=$(date +%Y%m%d-%H%M%S)</span><br><span class="line">#!/bin/bash</span><br><span class="line">mysqldump -hlocalhost -uroot -p123456 (数据库名) &gt; /root/st-automation/mysqlData/st_automation_$&#123;date&#125;.sql</span><br><span class="line">mysqldump -hlocalhost -uroot -p123456 (数据库名) | gzip &gt; /root/st-automation/mysqlData/st_automation_$&#123;date&#125;.sql.gz</span><br><span class="line">#!/bin/bash</span><br><span class="line">cp /root/st-automation/mysqlData/st_automation_$&#123;date&#125;.sql  /mnt/public_share/研发部/测试部/软件测试/ST-DTW/QT-BackUp/maxton/st_automation$&#123;date&#125;.sql</span><br><span class="line">mysqldump -hlocalhost -uroot -p123456 st_automation | gzip &gt; /mnt/public_share/研发部/测试部/软件测试/ST-DTW/QT-BackUp/maxton/st_automation$&#123;date&#125;.sql.gz</span><br><span class="line">#!/bin/bash</span><br><span class="line">find /root/st-automation/mysqlData/ -mtime +30 -name &quot;st_automation_*&quot; -exec rm -rf &#123;&#125; \;</span><br><span class="line"> *************编写结束**************************</span><br><span class="line"> 说明下:</span><br><span class="line"> a:date=$(date +%Y%m%d-%H%M%S)这个是获取当前系统的时间;格式为 2019718-143023</span><br><span class="line">   表示14点30分23秒</span><br><span class="line"> b: mysqldump -hlocalhost -uroot -p123456 --databases XXX &gt; /root/(路径)/XXX_$&#123;date&#125;.sql</span><br><span class="line"> localhost:主机ip,本地就用localhost</span><br><span class="line"> root : 用户</span><br><span class="line"> 123456 : 密码</span><br><span class="line"> XXX : 需要备份的数据库名称</span><br><span class="line"> /root/st-automation/mysqlData/XXX_$&#123;date&#125;.sql : 生成的文件存放目录;XXX最后与数据库名一样;好辨认;</span><br><span class="line"> /mnt/public_share...是挂载的共享路径(如何挂载,搜索Linux挂载Windows共享方法)</span><br><span class="line"> cp 复制到共享</span><br><span class="line"> | gzip 生成压缩文件</span><br><span class="line"> 实际生成的文件格式: st-automation_20190718-141401.sql;</span><br><span class="line"> find /root/st-automation/mysqlData/ -mtime +7 -name &quot;lanqiao_*&quot; -exec rm -rf &#123;&#125; \;</span><br><span class="line"> /root/st-automation/mysqlData/: 生成文件的目录</span><br><span class="line"> +7 : 7天前; 若要30天的;就是+30</span><br><span class="line"> &quot;st-automation_*&quot; : 文件名匹配</span><br><span class="line"> 后面就是执行删除命令;</span><br><span class="line"> 意思就是删除7天前生成的sql文件;只保留7天;如果要保留30天,就是+30;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-将脚本放入系统任务里执行"><a href="#4-将脚本放入系统任务里执行" class="headerlink" title="4: 将脚本放入系统任务里执行"></a>4: 将脚本放入系统任务里执行</h2><h3 id="1-打开系统任务-起始为空-centos7默认自启动这个任务"><a href="#1-打开系统任务-起始为空-centos7默认自启动这个任务" class="headerlink" title="1: 打开系统任务;起始为空;centos7默认自启动这个任务"></a>1: 打开系统任务;起始为空;centos7默认自启动这个任务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--&gt; crontab -e</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-写定时任务-来执行脚本"><a href="#2-写定时任务-来执行脚本" class="headerlink" title="2: 写定时任务,来执行脚本"></a>2: 写定时任务,来执行脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">每天执行</span><br><span class="line">0 0 * * * /root/st-automation/mysqlData/backupMysql.sh</span><br><span class="line">每分钟执行</span><br><span class="line">*/1 * * * * /root/st-automation/mysqlData/backupMysql.sh</span><br><span class="line">每两小时执行一次</span><br><span class="line">* */2 * * * /root/st-automation/mysqlData/backupMysql.sh</span><br><span class="line">写完退出保存; 按esc 退出编辑,然后 :wq 执行保存</span><br><span class="line">然后将系统任务重启</span><br><span class="line">service crond restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-测试执行"><a href="#3-测试执行" class="headerlink" title="3: 测试执行"></a>3: 测试执行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">测试: 你可以先设置每分钟执行</span><br><span class="line">	  */1 * * * * /root/st-automation/mysqlData/backupMysql.sh</span><br><span class="line">      然后在/root/st-automation/mysqlData下观察是不是每分钟都会生成一个sql文件;</span><br><span class="line">      注意: 执行 crontab -e ;修改了文件后;需要重启文件才生效; service crond restart</span><br><span class="line">      </span><br><span class="line">      生成之后也可以将原来mysql中的需要备份数据库删除;</span><br><span class="line">      然后进行mysql;需要登录mysql执行下面命令;</span><br><span class="line">      执行 source /usr/mysqlData/XXX.sql;就可以根据sql文件生成原来备份的数据库</span><br><span class="line">测试: 在/root/st-automation/mysqlData路径下,手动执行 ./ backupMysql.sh </span><br><span class="line">	  然后在/root/st-automation/mysqlData下观察是不是会生成一个sql文件;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-备注"><a href="#4-备注" class="headerlink" title="4:备注"></a>4:备注</h3><p>a：这里设置了本地备份和公司共享磁盘备份,防止机器或系统故障,磁盘无法打开</p>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 daweizi@126.com </span>
